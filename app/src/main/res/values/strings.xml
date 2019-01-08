@@ -2,6 +2,7 @@
     <string name="app_name">health-tracker</string>
     <string name="edit_number">Enter a number</string>
     <string name="increase_number">Increase</string>
-    <string name="start_pause">Start/Pause</string>
     <string name="reset_time">Reset</string>
+    <string name="on_Start">Start</string>
+    <string name="on_pause">Pause</string>
 </resources>
