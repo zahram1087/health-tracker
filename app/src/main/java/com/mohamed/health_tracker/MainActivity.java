@@ -9,6 +9,9 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import java.sql.Time;
+import java.time.Clock;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -59,25 +62,6 @@ public class MainActivity extends AppCompatActivity {
     /** FOR CLOCK FUNCTIONALITY */
 
 
-//    //PASS IN CURRENT TIME
-//    //DISPLAY CURRENT TIME
-//    //RESET SHOULD START TIME OVER
-//
-//    private void display2(long time) {
-//        TextView displayInteger = (TextView) findViewById(
-//                R.id.editText2);
-//        displayInteger.setText(""+time);
-//    }
-//
-//    //call the display method and passes the time
-//    public void setTime(View view) {
-//        long time = System.currentTimeMillis();
-//        display2(time);
-//
-//    }
-
-
-
     public void nClickToggle(View view) {
 
         // get your ToggleButton
@@ -88,14 +72,23 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // The toggle is enabled
-
                     TextView displayTime = (TextView) findViewById(R.id.editText2);
-                    displayTime.setText((int) System.currentTimeMillis());
+
+                    displayTime.setText(Long.toString(System.currentTimeMillis()));
+
+                    //formating
+                    //continueing the time
+
 
 
                 } else {
                     // The toggle is disabled
                     Log.d("BT","BROKE");
+                    //STOPS IT AT CURRENT TIME
+                    TextView displayTime = (TextView) findViewById(R.id.editText2);
+
+//                    Log.d("time:", Long.toString(System.currentTimeMillis()));
+                    displayTime.setText(Long.toString(System.currentTimeMillis()));
 
                 }
 
