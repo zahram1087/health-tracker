@@ -120,6 +120,6 @@ public class MainActivity extends AppCompatActivity {
         Button startStop = findViewById(R.id.toggleButton);
         startStop.setText("Start");
     }
-    
+
 }
 
