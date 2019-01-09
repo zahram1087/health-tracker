@@ -1,5 +1,6 @@
 package com.mohamed.health_tracker;
 
+import android.app.ActionBar;
 import android.icu.text.TimeZoneFormat;
 import android.nfc.Tag;
 import android.os.Handler;
@@ -10,18 +11,32 @@ import android.util.TimeFormatException;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
+import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageListener;
 
 import java.sql.Time;
 import java.text.DateFormat;
 import java.time.Clock;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 
 import static java.lang.System.currentTimeMillis;
 
 public class MainActivity extends AppCompatActivity {
+
+    //FOR CAROLSE
+    CarouselView carouselView;
+    int[] sampleImages = {R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4};
+    String [] quote = {"You are amazing", "Keep giving your best", "Love yourself", "You are super!"};
 
 /** FOR INCREASE FUNCTIONALITY */
     /** Called when the user taps the Send button */
@@ -60,6 +75,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
+        //FOR CAROLE:
+        carouselView = (CarouselView) findViewById(R.id.carouselView);
+        carouselView.setPageCount(sampleImages.length);
+
+        carouselView.setImageListener(imageListener);
+
+        //FOR TIMER
         timerView = (TextView) findViewById(R.id.editText2);
         final Button startPauseButton = findViewById(R.id.toggleButton);
 
@@ -120,6 +142,32 @@ public class MainActivity extends AppCompatActivity {
         Button startStop = findViewById(R.id.toggleButton);
         startStop.setText("Start");
     }
+/** FOR CAROUSEL FUNCTIONALITY */
+
+    /** Pulledin the following library for my Carousel solution: https://github.com/sayyam/carouselview  */
+
+
+    ImageListener imageListener = new ImageListener() {
+        @Override
+        public void setImageForPosition(int position, ImageView imageView) {
+            imageView.setImageResource(sampleImages[position]);
+
+            TextView inspo = (TextView) findViewById(R.id.textView2);
+
+            inspo.setText(quote[position]);
+
+            }
+
+
+
+    };
+
+
+
+
+    /** FOR INCREASE FUNCTIONALITY */
+    /** Called when the user taps the Send button */
+
 
 }
 
