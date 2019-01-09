@@ -1,5 +1,6 @@
 package com.mohamed.health_tracker;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,11 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+
 public class Timer extends AppCompatActivity {
 
     /** FOR CLOCK FUNCTIONALITY */
 
-    /** reference the following code for my timer solution: source: https://stackoverflow.com/questions/4597690/android-timer-how-to CLOCK FUNCTIONALITY */
+    /** reference the following code for my timer solution: source: https://stackoverflow.com/questions/4597690/android-timer-how-to and dan */
 
     TextView timerView;
     long initialTime = 0; //startTime
@@ -82,6 +84,15 @@ public class Timer extends AppCompatActivity {
         time.setText("00:00:00:000");
         Button startStop = findViewById(R.id.toggleButton);
         startStop.setText("Start");
+    }
+
+
+    //HOME ROUTES
+    public void goToOtherApps(View view){
+
+        Intent goHomeIntent = new Intent(this, MainActivity.class);
+        startActivity(goHomeIntent);
+
     }
 
 }

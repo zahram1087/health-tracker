@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToTimer(View view){
 
-        Intent timerIntent = new Intent(this, Timer.class);
+        Intent timerIntent = new Intent(this, com.mohamed.health_tracker.Timer.class);
         startActivity(timerIntent);
 
     }

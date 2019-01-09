@@ -1,5 +1,6 @@
 package com.mohamed.health_tracker;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -37,5 +38,12 @@ public class FingerExercise extends AppCompatActivity {
         display(startNumber);
     }
 
+    //HOME ROUTES
+    public void goToOtherApps(View view){
+
+        Intent goHomeIntent = new Intent(this, MainActivity.class);
+        startActivity(goHomeIntent);
+
+    }
 
 }
