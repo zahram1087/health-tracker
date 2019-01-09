@@ -23,6 +23,30 @@ import static java.lang.System.currentTimeMillis;
 
 public class MainActivity extends AppCompatActivity {
 
+/** FOR INCREASE FUNCTIONALITY */
+    /** Called when the user taps the Send button */
+    private void display(int number) {
+        TextView displayInteger = (TextView) findViewById(
+                R.id.editText);
+        displayInteger.setText("Clicks: " + number);
+
+        if(number % 10 == 0){
+            displayInteger.setText("YOUR SUPER STRONG");
+        }
+
+        if(number % 50 == 0){
+            displayInteger.setText("WOW SUPER FINGER!");
+        }
+    }
+
+    int startNumber = 0;
+
+    //call the display method and passes the redefined startNumber
+    public void increaseInteger(View view) {
+        startNumber = startNumber + 1;
+        display(startNumber);
+    }
+
     /** FOR CLOCK FUNCTIONALITY */
 
     /** reference the following code for my timer solution: source: https://stackoverflow.com/questions/4597690/android-timer-how-to CLOCK FUNCTIONALITY */
@@ -60,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     Handler stopWatchHandler = new Handler();
     Runnable stopWatchRunner = new Runnable() {
         @Override
@@ -81,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-
     @Override
     public void onPause() {
         super.onPause();
@@ -98,35 +120,6 @@ public class MainActivity extends AppCompatActivity {
         Button startStop = findViewById(R.id.toggleButton);
         startStop.setText("Start");
     }
-
-
-
-
-
-/** FOR INCREASE FUNCTIONALITY */
-    /** Called when the user taps the Send button */
-    private void display(int number) {
-        TextView displayInteger = (TextView) findViewById(
-                R.id.editText);
-        displayInteger.setText("Clicks: " + number);
-
-        if(number % 10 == 0){
-            displayInteger.setText("YOUR SUPER STRONG");
-        }
-
-        if(number % 50 == 0){
-            displayInteger.setText("WOW SUPER FINGER!");
-        }
-    }
-
-    int startNumber = 0;
-
-    //call the display method and passes the redefined startNumber
-    public void increaseInteger(View view) {
-        startNumber = startNumber + 1;
-        display(startNumber);
-
-    }
-
+    
 }
 
