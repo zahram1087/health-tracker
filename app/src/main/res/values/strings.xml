@@ -5,4 +5,8 @@
     <string name="reset_time">Reset</string>
     <string name="on_Start">Start</string>
     <string name="on_pause">Pause</string>
+    <string name="finger_excercise">Finger Excercise</string>
+    <string name="timer_app">Timer</string>
+    <string name="app_store">All Applications</string>
+    <string name="cancel_notification">STOP NOTIFICATIONS</string>
 </resources>

@@ -1,4 +1,7 @@
-## Feature Tasks
+# Feature Tasks: LAB 26 
+
+## Health Tracker app
+ 
 ###Finger Exercises
 One key part of health is building finger strength and endurance. On the main page, display a number and a button. The number should increase when the button is clicked.
 
@@ -20,7 +23,47 @@ At the top of our main page, we want to inspire our users with images of the typ
 
 * Your app should use the array of image objects to cycle through what it’s showing.
 
+# Feature Tasks: LAB 27
+
+Move your Finger Exercises and Stopwatch into their own pages of your app. Add buttons on the homepage to link to those pages, and ensure that the user can use the back button on the device to return to the app homepage. (It’s good practice to include some sort of back button on the page as well.)
+
+Health Notifications
+Create a new activity for Notifications. Allow users to set up reminders to drink water, which should appear every 2 hours in the notification bar. (For testing, you might want to shorten this to 15 or 30 seconds.)
+
+Styling
+Apply consistent styling across the various Activities in your app. Make sure they have a consistent look and feel, and that buttons are in similar locations on each screen.
 
 
-#### Sources for laab:
+
+#### Sources for lab26:
 * source: https://stackoverflow.com/questions/4597690/android-timer-how-to
+
+# Change Log
+
+Date: 1/10/19:
+
+* Time: 10:00AM
+* Description: https://github.com/zahram1087/health-tracker/commit/88970d49c58eb5d952c14c2cda56ecc153ca8a56
+
+* Time : 10:41AM
+* Description: updated Readme
+
+
+
+# screenshots of App Features:
+
+* HomePage:
+![Home_Page](../assets/mainActivity.png)
+
+* FingerExcercise:
+![Finger_excercise](../assets/finger.png)
+
+* Timer:
+![Timer](../assets/timer.png)
+
+* Notifications:
+![Notifications](../assets/notification.png)
+
+
+
+

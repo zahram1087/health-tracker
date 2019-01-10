@@ -1,151 +1,81 @@
 package com.mohamed.health_tracker;
 
-import android.app.ActionBar;
-import android.icu.text.TimeZoneFormat;
-import android.nfc.Tag;
-import android.os.Handler;
+
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+import android.os.SystemClock;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.TimeFormatException;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
+
 
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
-import java.sql.Time;
-import java.text.DateFormat;
-import java.time.Clock;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Timer;
-
-import static java.lang.System.currentTimeMillis;
 
 public class MainActivity extends AppCompatActivity {
+    /** FOR NOTIFICATION FUNCTIONALITY */
 
-    //FOR CAROLSE
+    private static final String CHANNEL_ID = "channelid";
+
+    private int notificationId = 1;
+
+
+    /** FOR CAROUSEL FUNCTIONALITY */
     CarouselView carouselView;
     int[] sampleImages = {R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4};
-    String [] quote = {"You are amazing", "Keep giving your best", "Love yourself", "You are super!"};
+    String[] quote = {"You are amazing", "Keep giving your best", "Love yourself", "You are super!"};
 
-/** FOR INCREASE FUNCTIONALITY */
-    /** Called when the user taps the Send button */
-    private void display(int number) {
-        TextView displayInteger = (TextView) findViewById(
-                R.id.editText);
-        displayInteger.setText("Clicks: " + number);
-
-        if(number % 10 == 0){
-            displayInteger.setText("YOUR SUPER STRONG");
-        }
-
-        if(number % 50 == 0){
-            displayInteger.setText("WOW SUPER FINGER!");
-        }
-    }
-
-    int startNumber = 0;
-
-    //call the display method and passes the redefined startNumber
-    public void increaseInteger(View view) {
-        startNumber = startNumber + 1;
-        display(startNumber);
-    }
-
-    /** FOR CLOCK FUNCTIONALITY */
-
-    /** reference the following code for my timer solution: source: https://stackoverflow.com/questions/4597690/android-timer-how-to CLOCK FUNCTIONALITY */
-
-    TextView timerView;
-    long initialTime = 0; //startTime
-    long currentTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        //FOR CAROLE:
+        /** FOR CAROUSEL FUNCTIONALITY */
         carouselView = (CarouselView) findViewById(R.id.carouselView);
         carouselView.setPageCount(sampleImages.length);
 
         carouselView.setImageListener(imageListener);
 
-        //FOR TIMER
-        timerView = (TextView) findViewById(R.id.editText2);
-        final Button startPauseButton = findViewById(R.id.toggleButton);
+        /** FOR NOTIFICATION FUNCTIONALITY */
+        //CREATE THE CHANNEL
+        createNotificationChannel();
+        //SEND THE NOTIFICATION TO THE CHANNEL
+        fireNotification();
 
-        startPauseButton.setText("Start");
-
-
-        startPauseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (startPauseButton.getText().equals("Pause")) {
-                    currentTime = System.currentTimeMillis() - initialTime + currentTime;
-                    stopWatchHandler.removeCallbacks(stopWatchRunner);
-                    startPauseButton.setText("Start");
-
-                } else {
-                    initialTime = System.currentTimeMillis();
-                    startPauseButton.setText("Pause");
-                    stopWatchHandler.postDelayed(stopWatchRunner, 0);
-                }
-
-            }
-        });
     }
 
-    Handler stopWatchHandler = new Handler();
-    Runnable stopWatchRunner = new Runnable() {
-        @Override
-        public void run() {
-            long millis = (System.currentTimeMillis() - initialTime + currentTime);
-            int seconds = (int)(millis/1000);
-            int minutes = seconds/60;
-            int hours = minutes/60;
 
-            millis = millis%1000;
-            seconds = seconds%60;
-            minutes = minutes%60;
-            hours = hours%24;
+    public void goToFingerExcercise(View view) {
 
-            timerView.setText(String.format("%02d:%02d:%02d:%03d", hours, minutes, seconds, millis));
-            stopWatchHandler.postDelayed(this, 50);
+        Intent fingerExcerciseIntent = new Intent(this, FingerExercise.class);
+        startActivity(fingerExcerciseIntent);
 
-        }
-    };
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        stopWatchHandler.removeCallbacks(stopWatchRunner);
-        Button startStopButton = findViewById(R.id.toggleButton);
-        startStopButton.setText("Start");
     }
 
-    public void onReset (View v) {
-        currentTime = 0;
-        stopWatchHandler.removeCallbacks(stopWatchRunner);
-        TextView time = findViewById(R.id.editText2);
-        time.setText("00:00:00:000");
-        Button startStop = findViewById(R.id.toggleButton);
-        startStop.setText("Start");
+
+    public void goToTimer(View view) {
+
+        Intent timerIntent = new Intent(this, com.mohamed.health_tracker.Timer.class);
+        startActivity(timerIntent);
+
     }
+
 /** FOR CAROUSEL FUNCTIONALITY */
 
-    /** Pulledin the following library for my Carousel solution: https://github.com/sayyam/carouselview  */
-
+    /**
+     * Pulled in the following library for my Carousel solution: https://github.com/sayyam/carouselview
+     */
 
     ImageListener imageListener = new ImageListener() {
         @Override
@@ -156,18 +86,82 @@ public class MainActivity extends AppCompatActivity {
 
             inspo.setText(quote[position]);
 
-            }
-
-
+        }
 
     };
 
+    /** FOR NOTIFICATION FUNCTIONALITY */
+
+    /** reference the following for notification build solution: source: //https://developer.android.com/training/notify-user/build-notification and https://gist.github.com/BrandonSmith/6679223*/
+
+    //set the notification's content and channel using a NotificationCompat.Builder object
 
 
+     public void fireNotification () {
+         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                 .setSmallIcon(R.drawable.img1)
+                 .setContentTitle("Health Notifications")
+                 .setContentText("Drink Water")
+                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-    /** FOR INCREASE FUNCTIONALITY */
-    /** Called when the user taps the Send button */
+         //pass in the context(this) and class to run to the Intent. The job of this intent is to tell the notification reciever to send a notification
+         Intent fireNotificationIntent = new Intent(this, NotificationReciever.class);
 
+         //at this point: include the extra information you will use in the notification (from the NotificationReciever Class)
+         fireNotificationIntent.putExtra("notification", mBuilder.build());
+         fireNotificationIntent.putExtra("notification_id", notificationId++);
+
+         //pending intent's job is to send out the above intent
+         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, fireNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+         //Next is to schedule the pending intent using an alarm manager
+         AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+
+         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime()+5000, pendingIntent);
+
+
+     }
+
+    /** reference the following for notification channel build method :source: https://developer.android.com/training/notify-user/channels*/
+
+    private void createNotificationChannel() {
+
+
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = CHANNEL_ID;
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    public void stopNotifications(View view){
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.img1)
+                .setContentTitle("Health Notifications")
+                .setContentText("Drink Water")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        Intent fireNotificationIntent = new Intent(this, NotificationReciever.class);
+
+        //at this point: include the extra information you will use in the notification (from the NotificationReciever Class)
+        fireNotificationIntent.putExtra("notification", mBuilder.build());
+        fireNotificationIntent.putExtra("notification_id", notificationId++);
+
+        //pending intent's job is to send out the above intent
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, fireNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        //Next is to schedule the pending intent using an alarm manager
+
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+
+        alarmManager.cancel(pendingIntent);
+    }
 
 }
 
