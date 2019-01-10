@@ -5,6 +5,7 @@ import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -52,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
         createNotificationChannel();
         //SEND THE NOTIFICATION TO THE CHANNEL
         fireNotification();
+
+        //DATABASE INSTANCE
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "exercise").build();
 
     }
 
