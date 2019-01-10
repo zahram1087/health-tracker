@@ -54,6 +54,10 @@ Date: 1/10/19:
 * Time : 10:41AM
 * Description: updated Readme
 
+* Time : 1:21AM
+* Description: https://github.com/zahram1087/health-tracker/commit/ec4a8351c93899258e7b1aadbedc08fbd7842439
+
+
 
 
 # screenshots of App Features:
