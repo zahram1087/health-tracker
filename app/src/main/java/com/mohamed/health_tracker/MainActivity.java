@@ -125,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
     /** reference the following for notification channel build method :source: https://developer.android.com/training/notify-user/channels*/
 
     private void createNotificationChannel() {
+
+
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -136,6 +138,29 @@ public class MainActivity extends AppCompatActivity {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+    }
+
+    public void stopNotifications(View view){
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.img1)
+                .setContentTitle("Health Notifications")
+                .setContentText("Drink Water")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        Intent fireNotificationIntent = new Intent(this, NotificationReciever.class);
+
+        //at this point: include the extra information you will use in the notification (from the NotificationReciever Class)
+        fireNotificationIntent.putExtra("notification", mBuilder.build());
+        fireNotificationIntent.putExtra("notification_id", notificationId++);
+
+        //pending intent's job is to send out the above intent
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, fireNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        //Next is to schedule the pending intent using an alarm manager
+
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+
+        alarmManager.cancel(pendingIntent);
     }
 
 }

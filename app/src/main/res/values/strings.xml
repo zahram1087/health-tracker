@@ -8,4 +8,5 @@
     <string name="finger_excercise">Finger Excercise</string>
     <string name="timer_app">Timer</string>
     <string name="app_store">All Applications</string>
+    <string name="cancel_notification">STOP NOTIFICATIONS</string>
 </resources>
