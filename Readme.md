@@ -33,7 +33,13 @@ Create a new activity for Notifications. Allow users to set up reminders to drin
 Styling
 Apply consistent styling across the various Activities in your app. Make sure they have a consistent look and feel, and that buttons are in similar locations on each screen.
 
+### Feature Tasks: LAB 28
 
+### Displaying the Exercise Diary
+Add a new Activity to hold the Exercise Diary. In that view, display all entries from the Exercise database in a ListView. (At this point, that should show a single row.) Make sure that Exercise looks reasonable.
+
+### Adding to the Exercise Diary
+At the top of the Exercise Diary activity, add a form that allows a user to enter data about an exercise. When they hit submit, the information about that exercise should be stored in the database and displayed in the ListView. You can choose how the timestamp works: either let the user enter when they completed the exercise, or use the time when they hit submit on the form
 
 #### Sources for lab26:
 * source: https://stackoverflow.com/questions/4597690/android-timer-how-to
@@ -47,6 +53,10 @@ Date: 1/10/19:
 
 * Time : 10:41AM
 * Description: updated Readme
+
+* Time : 1:21AM
+* Description: https://github.com/zahram1087/health-tracker/commit/ec4a8351c93899258e7b1aadbedc08fbd7842439
+
 
 
 
