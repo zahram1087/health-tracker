@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
      public void fireNotification () {
          //user timer inspired by: https://stackoverflow.com/questions/4249542/run-a-task-every-x-minutes-with-windows-task-scheduler
 
+
          java.util.Timer time = new java.util.Timer();
          time.schedule(new TimerTask() {
              @Override
@@ -123,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
 
              }
          },5000,5000);
-     }
 
     /** reference the following for notification channel build method :source: https://developer.android.com/training/notify-user/channels*/
 
