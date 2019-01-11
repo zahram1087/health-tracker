@@ -2,6 +2,7 @@ package com.mohamed.health_tracker;
 
 
 import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,7 +10,6 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
+
+import java.util.TimerTask;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -103,28 +105,24 @@ public class MainActivity extends AppCompatActivity {
 
 
      public void fireNotification () {
-         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                 .setSmallIcon(R.drawable.img1)
-                 .setContentTitle("Health Notifications")
-                 .setContentText("Drink Water")
-                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+         //user timer inspired by: https://stackoverflow.com/questions/4249542/run-a-task-every-x-minutes-with-windows-task-scheduler
 
-         //pass in the context(this) and class to run to the Intent. The job of this intent is to tell the notification reciever to send a notification
-         Intent fireNotificationIntent = new Intent(this, NotificationReciever.class);
+         java.util.Timer time = new java.util.Timer();
+         time.schedule(new TimerTask() {
+             @Override
+             public void run() {
+                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(MainActivity.this, CHANNEL_ID)
+                         .setSmallIcon(R.drawable.img1)
+                         .setContentTitle("Health Notifications")
+                         .setContentText("Drink Water")
+                         .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainActivity.this);
 
-         //at this point: include the extra information you will use in the notification (from the NotificationReciever Class)
-         fireNotificationIntent.putExtra("notification", mBuilder.build());
-         fireNotificationIntent.putExtra("notification_id", notificationId++);
-
-         //pending intent's job is to send out the above intent
-         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, fireNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-         //Next is to schedule the pending intent using an alarm manager
-         AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-
-         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime()+5000, pendingIntent);
+                 notificationManager.notify(notificationId++, mBuilder.build());
 
 
+             }
+         },5000,5000);
      }
 
     /** reference the following for notification channel build method :source: https://developer.android.com/training/notify-user/channels*/
@@ -146,27 +144,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void stopNotifications(View view){
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.img1)
-                .setContentTitle("Health Notifications")
-                .setContentText("Drink Water")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-        Intent fireNotificationIntent = new Intent(this, NotificationReciever.class);
-
-        //at this point: include the extra information you will use in the notification (from the NotificationReciever Class)
-        fireNotificationIntent.putExtra("notification", mBuilder.build());
-        fireNotificationIntent.putExtra("notification_id", notificationId++);
-
-        //pending intent's job is to send out the above intent
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, fireNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        //Next is to schedule the pending intent using an alarm manager
-
-        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-
-        alarmManager.cancel(pendingIntent);
+        java.util.Timer time = new java.util.Timer();
+//        time.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(MainActivity.this, CHANNEL_ID)
+//                        .setSmallIcon(R.drawable.img1)
+//                        .setContentTitle("Health Notifications")
+//                        .setContentText("Drink Water")
+//                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+//                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainActivity.this);
+//
+////                notificationManager.notify(notificationId++, mBuilder.build());
+//
+//                notificationManager.cancel(String.valueOf(MainActivity.this), notificationId);
+//
+//            }
+//        },5000,5000);
+        time.cancel();
     }
+
 
 }
 
