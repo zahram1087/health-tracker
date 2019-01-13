@@ -16,13 +16,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FingerExercise" android:parentActivityName=".MainActivity" />
-        <activity android:name=".Timer" android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".FingerExercise"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".Timer"
+            android:parentActivityName=".MainActivity" />
 
         <receiver
             android:name=".NotificationReciever"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
+
+        <activity android:name=".ExcerciseDiary"></activity>
     </application>
 
 </manifest>
