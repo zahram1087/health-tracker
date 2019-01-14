@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -15,22 +16,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import java.util.Date;
 import java.util.List;
 
 public class ExcerciseDiary extends AppCompatActivity {
-//    EditText editTitle;
-//    EditText editQuantity;
-//    EditText editDescription;
-//    EditText editTimeStamp;
-//    Button submitButton = (Button) findViewById(R.id.save);
 
-    TextView display = (TextView) findViewById(R.id.textView6);
-//
-//    public static AppDatabase db;
-//
-//    public static ExerciseDao dao;
+    //display the data in the dataBase
+    private static AppDatabase appDatabase;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
-//    Exercise excercise;
+    //input names
+    EditText editTitle;
+    EditText editQuantity;
+    EditText editDescription;
+    EditText editTimeStamp;
+    Button submitButton = (Button) findViewById(R.id.save);
 
 
     //Getting the input: Dealing with the action source: https://www.101apps.co.za/articles/capturing-user-input-with-android-s-textfields.html
@@ -39,6 +41,18 @@ public class ExcerciseDiary extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_excercise_diary);
+
+        appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "exercise").allowMainThreadQueries().build();
+
+        //Help from Jessica Lovell:
+        recyclerView = (RecyclerView) findViewById(R.id.diaryRecycler);
+        recyclerView.setHasFixedSize(true);
+
+        // define an adapter
+        mAdapter = new MyAdapter(appDatabase.getExerciseDao().getAll());
+        recyclerView.setAdapter(mAdapter);
+
 
 //        //finding the EditTextby ID:
 //        editTitle.findViewById(R.id.editText);
@@ -48,19 +62,7 @@ public class ExcerciseDiary extends AppCompatActivity {
 //        submitButton.findViewById(R.id.save);
 
 
-        setContentView(R.layout.activity_excercise_diary);
-
-
-
-//        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "excercise").allowMainThreadQueries().build();
-
-
-        //If you wanted to get all of the EXcercise data that’s in the database:
-//        List<Exercise> everyone = db.getExerciseDao().getAllexcercise();
-
-
         //Dealing with the action for Title
-        EditText editTitle = (EditText) findViewById(R.id.editText);
         editTitle.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -77,7 +79,6 @@ public class ExcerciseDiary extends AppCompatActivity {
 
 
         //Dealing with the action for Quantity
-        EditText editQuantity = (EditText) findViewById(R.id.editText2);
         editQuantity.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -93,7 +94,6 @@ public class ExcerciseDiary extends AppCompatActivity {
         });
 
         //Dealing with the action for Description
-        EditText editDescription = (EditText) findViewById(R.id.edit);
         editDescription.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -109,7 +109,6 @@ public class ExcerciseDiary extends AppCompatActivity {
         });
 
         //Dealing with the action for timeStamp
-        EditText editTimeStamp = (EditText) findViewById(R.id.timeStamp);
         editTimeStamp.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -132,32 +131,27 @@ public class ExcerciseDiary extends AppCompatActivity {
             }
         });
 
+    }
 
-//        submitButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // fetch data and create Excercise object
-//                Exercise excercise;
-//
-//                String a = editTitle.getText().toString();
-//                int b = Integer.parseInt(editQuantity.getText().toString());
-//                String c = editDescription.getText().toString();
-//                String d = editTimeStamp.getText().toString();
-//
-//                excercise = new Exercise(a, b, c, d);
-//
-//                // create worker thread to insert data into database
-//                ExcerciseDiary.db.getExerciseDao().insertAll(excercise);
-//
-//                editTitle.setText("");
-//                editDescription.setText("");
-//                editQuantity.setText("");
-//                editTimeStamp.setText("");
-//
-//                Toast.makeText(ExcerciseDiary.this, "excercise added succeesfullly", Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
+    //saving the diary entry to the dataBase
+
+    public void addDiaryEntryOnButtonClick(View view){
+
+        //finding the EditTextby ID:
+        editTitle.findViewById(R.id.editText);
+        editQuantity.findViewById(R.id.editText2);
+        editDescription.findViewById(R.id.edit);
+        String timestamp = new Date().toString();
+        submitButton.findViewById(R.id.save);
+
+        // fetch data and create Excercise object
+        Exercise exercise = new Exercise(editTitle.getText().toString(), editQuantity.getText().toString(), editDescription.getText().toString(), timestamp);
+        appDatabase.getExerciseDao().insertAll(exercise);
+
+        //source: https://stackoverflow.com/questions/3053761/reload-activity-in-android
+        finish();
+        startActivity(getIntent());
+
 
 
     }

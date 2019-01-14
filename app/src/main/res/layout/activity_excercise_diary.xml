@@ -65,29 +65,29 @@
             android:imeOptions="actionDone"
             android:inputType="time" />
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/timeStamp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="413dp"
-            android:layout_marginTop="76dp"
-            android:layout_marginEnd="404dp"
-            android:layout_marginBottom="119dp"
-            android:text="TextView" />
-
         <Button
             android:id="@+id/save"
             android:layout_width="138dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/timeStamp"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="339dp"
-            android:layout_marginEnd="175dp"
+            android:layout_marginTop="19dp"
+            android:layout_marginEnd="123dp"
+            android:onClick="addDiaryEntryOnButtonClick"
             android:text="@string/submit" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/diaryRecycler"
+            android:layout_width="158dp"
+            android:layout_height="131dp"
+            android:layout_below="@+id/save"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="119dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="107dp"
+            android:layout_marginBottom="7dp" />
     </RelativeLayout>
 
 
