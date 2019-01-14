@@ -10,37 +10,20 @@ import java.util.List;
 
 @Dao
 public interface ExerciseDao {
-
+    // Gets all excercises in the database
     @Query("SELECT * FROM exercise")
-    List<Exercise> getAll();
+    List<Exercise> getAllexcercise();
 
     @Query("SELECT * FROM exercise WHERE id=:id")
     Exercise getById(long id);
 
     @Insert
     void insertAll(Exercise exercises);
-    //add
 
     @Delete
     void delete(Exercise exercise);
 
     @Update
     void update(Exercise exercise);
-
-    // Gets all excercises in the database
-    @Query("SELECT * FROM exercise")
-    List<Exercise> getAllexcercise();
-
-    //    @Query("SELECT * FROM exercise WHERE title LIKE :first LIMIT 1")
-//    Exercise findByTitle(String first);
-//
-//    @Query("SELECT * FROM exercise WHERE quantity LIKE :first LIMIT 1")
-//    Exercise findByQuantity(int first);
-//
-//    @Query("SELECT * FROM exercise WHERE timeStamp LIKE :first LIMIT 1")
-//    Exercise findByTimeStamp(long first);
-//
-//    @Query("SELECT * FROM exercise WHERE description LIKE :first LIMIT 1")
-//    Exercise findByActivityDescription(String first);
 
 }
