@@ -3,26 +3,33 @@ package com.mohamed.health_tracker;
 //db dependencies: source: https://developer.android.com/topic/libraries/architecture/adding-components
 //used the pre-androidX room version
 
-import android.arch.persistence.room.ColumnInfo;
+
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity
 public class Exercise {
 
-    @PrimaryKey
-    public int uid;
+    //source: https://developer.android.com/training/data-storage/room/defining-data
 
-    @ColumnInfo(name = "activity_title")
-    public String activityTitle;
+    @PrimaryKey(autoGenerate = true)
+    public long id;
 
-    @ColumnInfo(name = "quantity")
-    public int quantity;
+    public String title;
+    public String quantity;
+    public String description;
+    public String timestamp;
 
-    @ColumnInfo(name = "timeStamp")
-    public long timeStamp;
+    public Exercise () {}
 
-    @ColumnInfo(name = "activity_description")
-    public String activityDescription;
+    //constructor
+    public Exercise (String title, String quantity, String description, String timestamp){
+
+        this.title=title;
+        this.quantity=quantity;
+        this.description=description;
+        this.timestamp=timestamp;
+
+    }
 
 }
