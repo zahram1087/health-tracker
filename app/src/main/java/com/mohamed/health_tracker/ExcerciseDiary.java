@@ -60,12 +60,13 @@ public class ExcerciseDiary extends AppCompatActivity {
         EditText editQuantity = findViewById(R.id.quantity);
         EditText editDescription=findViewById(R.id.description);
         String timestamp = new Date().toString();
-        
+
         // fetch data and create Excercise object
         Exercise exercise = new Exercise(editTitle.getText().toString(), editQuantity.getText().toString(), editDescription.getText().toString(), timestamp);
         appDatabase.getExerciseDao().insertAll(exercise);
 
         //source: https://stackoverflow.com/questions/3053761/reload-activity-in-android
+        //source: https://medium.com/@guendouz/room-livedata-and-recyclerview-d8e96fb31dfe
         finish();
         startActivity(getIntent());
     }
