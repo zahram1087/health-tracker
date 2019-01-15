@@ -65,21 +65,5 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/timer_app" />
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="330dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:background="@color/colorPrimary"
-        android:onClick="goToOtherApps"
-        android:text="@string/app_store"
-        android:textColor="@color/vpi__background_holo_dark"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

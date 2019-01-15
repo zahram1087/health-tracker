@@ -33,13 +33,21 @@ Create a new activity for Notifications. Allow users to set up reminders to drin
 Styling
 Apply consistent styling across the various Activities in your app. Make sure they have a consistent look and feel, and that buttons are in similar locations on each screen.
 
-### Feature Tasks: LAB 28
+# Feature Tasks: LAB 28
 
 ### Displaying the Exercise Diary
 Add a new Activity to hold the Exercise Diary. In that view, display all entries from the Exercise database in a ListView. (At this point, that should show a single row.) Make sure that Exercise looks reasonable.
 
 ### Adding to the Exercise Diary
 At the top of the Exercise Diary activity, add a form that allows a user to enter data about an exercise. When they hit submit, the information about that exercise should be stored in the database and displayed in the ListView. You can choose how the timestamp works: either let the user enter when they completed the exercise, or use the time when they hit submit on the form
+
+# Feature Tasks: LAB 29
+
+#### Espresso
+Add Espresso tests for all of the Activities we’ve built so far. In particular, the Finger Exercises would benefit from testing, as would the image carousel.
+
+#### Camera
+Add the ability for users to enter a profile picture. Give them the option of taking a new photo with the camera, or using images already on their phone. Your app will need to request the appropriate permissions for this. Once users take a profile picture, you should display it on the homescreen
 
 #### Sources for lab26:
 * source: https://stackoverflow.com/questions/4597690/android-timer-how-to
@@ -57,6 +65,15 @@ Date: 1/10/19:
 * Time : 1:21AM
 * Description: https://github.com/zahram1087/health-tracker/commit/ec4a8351c93899258e7b1aadbedc08fbd7842439
 
+Date: 1/14/19
+
+* Time: 10:34AM
+* Description: https://github.com/zahram1087/health-tracker/commit/88970d49c58eb5d952c14c2cda56ecc153ca8a56
+
+Date: 1/15/19
+
+* Time: 1:34PM
+* Description: https://github.com/zahram1087/health-tracker/commit/ef4fd5da0d9a4ecdc06922e8847890f86d6d87a0
 
 
 
@@ -73,6 +90,12 @@ Date: 1/10/19:
 
 * Notifications:
 ![Notifications](../assets/notification.png)
+
+* Diary:
+![Diary](../assets/diary.png)
+
+* HomePage Tp include Diary Activity:
+![Diary](../assets/mainActivityDiaryRoute.png)
 
 
 

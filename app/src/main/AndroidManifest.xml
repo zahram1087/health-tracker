@@ -28,7 +28,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".ExcerciseDiary"></activity>
+        <activity android:name=".ExcerciseDiary"
+            android:parentActivityName=".MainActivity" ></activity>
     </application>
 
 </manifest>

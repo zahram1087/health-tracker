@@ -19,14 +19,16 @@ public class FingerExercise extends AppCompatActivity {
     private void display(int number) {
         TextView displayInteger = (TextView) findViewById(
                 R.id.editText);
-        displayInteger.setText("Clicks: " + number);
 
-        if(number % 10 == 0){
+
+        if(number % 50 == 0 && number != 0){
             displayInteger.setText("YOUR SUPER STRONG");
         }
 
-        if(number % 50 == 0){
+        else if(number % 10 == 0){
             displayInteger.setText("WOW SUPER FINGER!");
+        }else{
+            displayInteger.setText("Clicks: " + number);
         }
     }
 
