@@ -47,6 +47,7 @@ public class ExcerciseDiary extends AppCompatActivity {
         // define an adapter
         mAdapter = new MyAdapter(appDatabase.getExerciseDao().getAllexcercise());
         recyclerView.setAdapter(mAdapter);
+//        mAdapter.notifyDataSetChanged();
 
 
     }
@@ -65,9 +66,12 @@ public class ExcerciseDiary extends AppCompatActivity {
         Exercise exercise = new Exercise(editTitle.getText().toString(), editQuantity.getText().toString(), editDescription.getText().toString(), timestamp);
         appDatabase.getExerciseDao().insertAll(exercise);
 
+
+
         //source: https://stackoverflow.com/questions/3053761/reload-activity-in-android
         //source: https://medium.com/@guendouz/room-livedata-and-recyclerview-d8e96fb31dfe
         finish();
         startActivity(getIntent());
+        mAdapter.notifyDataSetChanged();
     }
 }
