@@ -21,22 +21,39 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class FingerExerciseTest {
-
-    private static final String mStringToBeTyped = "Clicks: " + 1;
+    //https://developer.android.com/training/testing/espresso/basics
 
     @Rule
     public ActivityTestRule<FingerExercise> mActivityRule =
             new ActivityTestRule<>(FingerExercise.class);
 
     @Test
-    public void changeText_sameActivity() {
+    public void buttonText() {
 
         // check mateches dispplay.
-        onView(allOf(withId(R.id.editText), withText("Clicks: "+1)))
-                .perform(click())
+        onView(allOf(withId(R.id.button), withText("INCREASE")))
                 .check(matches(isDisplayed()));
 
-        //onView(allOf(withId(R.id.my_view), withText("Hello!")))
     }
 
+    @Test
+    public void testingClicksCounted() {
+
+        for (int i = 1; i < 101; i++) {
+            onView(allOf(withId(R.id.button), withText("INCREASE")))
+                    .perform(click());
+
+            if (i % 50 == 0) {
+                onView(allOf(withId(R.id.editText), withText("YOUR SUPER STRONG")))
+                        .check(matches(isDisplayed()));
+            } else if (i % 10 == 0) {
+                onView(allOf(withId(R.id.editText), withText("WOW SUPER FINGER!")))
+                        .check(matches(isDisplayed()));
+            } else {
+                onView(allOf(withId(R.id.editText), withText("Clicks: " + i)))
+                        .check(matches(isDisplayed()));
+            }
+
+        }
+    }
 }
