@@ -1,7 +1,7 @@
 package com.mohamed.health_tracker;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.RoomDatabase;
+import androidx.room.Database;
+import androidx.room.RoomDatabase;
 
 
 
