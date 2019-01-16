@@ -31,7 +31,8 @@
             android:ellipsize="marquee"
             android:text="Description"
             android:textSize="12sp"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:padding="1dip"/>
 
         <TextView
             android:id="@+id/firstLine"
@@ -44,7 +45,8 @@
             android:layout_toRightOf="@id/icon"
             android:gravity="center_vertical"
             android:text="Example application"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:padding="1dip"/>
 
         <TextView
             android:id="@+id/textView9"
@@ -57,7 +59,8 @@
             android:layout_toRightOf="@id/icon"
             android:gravity="center_vertical"
             android:text="Example application"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:padding="1dip"/>
 
     </RelativeLayout>
 
