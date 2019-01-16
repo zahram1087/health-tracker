@@ -17,7 +17,7 @@ import androidx.test.runner.AndroidJUnit4;
 //import androidx.test.core.app.ApplicationProvider;
 import org.junit.runner.RunWith;
 
-//import static com.google.common.truth.Truth.assertThat;
+
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class FingerExerciseTest {
@@ -30,7 +30,7 @@ public class FingerExerciseTest {
     @Test
     public void buttonText() {
 
-        // check mateches dispplay.
+        // check matches display.
         onView(allOf(withId(R.id.button), withText("INCREASE")))
                 .check(matches(isDisplayed()));
 

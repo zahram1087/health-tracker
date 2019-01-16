@@ -32,4 +32,8 @@ public class Exercise {
 
     }
 
+    public String toString() {
+        return this.title + ": " + this.description + " - " + this.timestamp;
+    }
+
 }

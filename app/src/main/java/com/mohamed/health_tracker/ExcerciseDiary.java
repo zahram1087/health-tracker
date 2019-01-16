@@ -62,6 +62,9 @@ public class ExcerciseDiary extends AppCompatActivity {
         EditText editDescription=findViewById(R.id.description);
         String timestamp = new Date().toString();
 
+
+        //textEdit 9: time stamp not adding well
+
         // fetch data and create Excercise object
         Exercise exercise = new Exercise(editTitle.getText().toString(), editQuantity.getText().toString(), editDescription.getText().toString(), timestamp);
         appDatabase.getExerciseDao().insertAll(exercise);

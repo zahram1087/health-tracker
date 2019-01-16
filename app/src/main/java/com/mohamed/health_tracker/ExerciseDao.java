@@ -26,4 +26,8 @@ public interface ExerciseDao {
     @Update
     void update(Exercise exercise);
 
+    //source: https://stackoverflow.com/questions/14018394/android-sqlite-query-getting-latest-10-records
+    @Query("SELECT * FROM exercise order by id DESC limit 1")
+    Exercise getLast();
+
 }

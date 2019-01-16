@@ -15,32 +15,29 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="6dip"
-            android:contentDescription="TODO"
             android:src="@mipmap/ic_launcher" />
 
         <TextView
             android:id="@+id/secondLine"
             android:layout_width="fill_parent"
             android:layout_height="26dip"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:layout_marginBottom="0dp"
-            android:layout_toEndOf="@id/icon"
-            android:ellipsize="marquee"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/icon"
+            android:singleLine="true"
             android:text="Description"
-            android:textSize="12sp"
-            android:singleLine="true" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/firstLine"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/secondLine"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
+            android:layout_width="204dp"
+            android:layout_height="32dp"
             android:layout_alignWithParentIfMissing="true"
+            android:layout_above="@id/secondLine"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="96dp"
             android:layout_toRightOf="@id/icon"
             android:gravity="center_vertical"
             android:text="Example application"
@@ -48,15 +45,16 @@
 
         <TextView
             android:id="@+id/textView9"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/secondLine"
-            android:layout_alignParentRight="true"
+            android:layout_width="99dp"
+            android:layout_height="32dp"
+            android:layout_above="@+id/secondLine"
+            android:layout_alignEnd="@+id/secondLine"
             android:layout_alignParentTop="true"
-            android:layout_alignWithParentIfMissing="true"
-            android:layout_toRightOf="@id/icon"
-            android:gravity="center_vertical"
-            android:text="Example application"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="-1dp"
+            android:layout_marginBottom="0dp"
+            android:lineSpacingExtra="18sp"
+            android:text="Date"
             android:textSize="16sp" />
 
     </RelativeLayout>
