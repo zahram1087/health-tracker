@@ -18,6 +18,10 @@ android {
         }
 
     }
+    // https://mvnrepository.com/artifact/com.google.guava/listenablefuture
+    configurations {
+        all*.exclude group: 'com.google.guava', module: 'listenablefuture'
+    }
 
 }
 
@@ -63,14 +67,17 @@ dependencies {
     // https://mvnrepository.com/artifact/org.robolectric/robolectric
     testImplementation group: 'org.robolectric', name: 'robolectric', version: '4.1'
 
-    // https://mvnrepository.com/artifact/com.google.guava/listenablefuture
-    configurations {
-        all*.exclude group: 'com.google.guava', module: 'listenablefuture'
-    }
+
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.0'
 
     //source: https://developer.android.com/training/testing/set-up-project
     androidTestImplementation 'androidx.test:core:1.1.0'
+
+    //https://developer.android.com/training/volley/
+    //in the overview section
+    implementation 'com.android.volley:volley:1.1.1'
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
 
 
 }
