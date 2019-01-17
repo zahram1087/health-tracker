@@ -9,12 +9,13 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 import androidx.room.Room;
 import androidx.test.runner.AndroidJUnit4;
 import androidx.test.core.app.ApplicationProvider;
 
-import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.*;
 
 @RunWith(AndroidJUnit4.class)
 public class DataBaseTest {
@@ -32,6 +33,18 @@ public class DataBaseTest {
     @After
     public void closeDb() throws IOException {
         mDb.close();
+    }
+
+    @Test
+    public void createAndReadExerciseTestAddedToDataBase() throws Exception{
+
+        String timestamp = new Date().toString();
+        Exercise exercise = new Exercise("jumping jacks", "5", "did jumping jacks", timestamp);
+        mExcerciseDao.insertAll(exercise);
+
+        List<Exercise> exercises = mExcerciseDao.getAllexcercise();
+
+        assertFalse(exercise== null);
     }
 
     @Test
@@ -79,5 +92,6 @@ public class DataBaseTest {
         assertEquals(exerciseById.toString(), mExcerciseDao.getLast().toString());
 
     }
+
 
 }
