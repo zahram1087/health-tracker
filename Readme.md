@@ -50,16 +50,37 @@ Add Espresso tests for all of the Activities we’ve built so far. In particular
 Add the ability for users to enter a profile picture. Give them the option of taking a new photo with the camera, or using images already on their phone. Your app will need to request the appropriate permissions for this. Once users take a profile picture, you should display it on the homescreen
 
 # Feature Tasks: LAB 31
-  Backend
+  #### Backend
   Add a replica of your Exercise model to the backend Spring app. Create a POST route that allows creating a new Exercise, and a GET route that responds with all Exercises currently in the database. Test these routes with Postman, deploy, and ensure there’s at least one Exercise in your deployed db. (This is all easy now… right?)
   
-  Android: Display Exercises from the server
+  #### Android: Display Exercises from the server
   When a user opens the Exercise Diary page, the app should make a request to the server to retrieve all the Exercises in the server’s database. It should display both those Exercises and the ones that are local to the device within the Diary page.
   
-  Android: Post Exercises to the server
+  #### Android: Post Exercises to the server
   When a user creates a new Exercise locally on their device, in addition to saving it to the local database, the app should POST it to the server.
+  
+  #### Running app: https://exercise-health-app.herokuapp.com/exercise
+  
+  
+ # Feature Tasks: LAB 32
+  #### Using strings.xml
+  Remove all hardcoded strings from your UI, and instead use the strings.xml file. (Finally make all of those warnings go away!) You should continue using strings.xml for all future additions to your app, as well.
+  
+  #### Location
+  When a user adds an exercise, they should be able to include their current location. Update your models appropriately, and display the location within the ListView.
+  
+  #### SharedPrefs
+  Ensure that the user’s username is correctly displayed throughout the app. Also, modify the homepage to include some key stats, such as the current finger exercise count and the total number of times the user has visited the homepage.
+  
+  #### Collaborators:
+  
+  Dave  
+  Evan
+  Jeff
+  
+  
 
-#### Sources for lab26:
+  #### Sources for lab26:
 * source: https://stackoverflow.com/questions/4597690/android-timer-how-to
 
 # Change Log
