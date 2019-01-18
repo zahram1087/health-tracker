@@ -20,6 +20,7 @@ public class Exercise {
     public String description;
     public String timestamp;
 
+
     public Exercise () {}
 
     //constructor
