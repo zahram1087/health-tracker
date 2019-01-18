@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -20,17 +23,22 @@ import com.google.gson.Gson;
 
 import java.lang.reflect.Type;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ExcerciseDiary extends AppCompatActivity {
 
 
     //display the data in the dataBase
-    private static Exercise exercise;
-    private static AppDatabase appDatabase;
+    private Exercise exercise;
+    private AppDatabase appDatabase;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+
+    //created the listDataBase for adding the API db stuff
+    private List<Exercise> serverDatabase;
 
 
     @Override
@@ -38,11 +46,104 @@ public class ExcerciseDiary extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_excercise_diary);
 
+        //calling the server database
+        getServerDataBase();
+
+
+    }
+
+
+    //saving the diary entry to the dataBase
+    public void addDiaryEntryOnButtonClick(View view) {
+
+        //finding the EditTextby ID:
+        EditText editTitle = findViewById(R.id.title);
+        EditText editQuantity = findViewById(R.id.quantity);
+        EditText editDescription = findViewById(R.id.description);
+
+        Date now = new Date();
+        String timestamp = DateFormat.format("M/d/yy h:mma", now).toString();
+
+//        String timestamp = new Date().toString();
+
+
+
+        // fetch data and create Excercise object
+        Exercise exercise = new Exercise(editTitle.getText().toString(), editQuantity.getText().toString(), editDescription.getText().toString(), timestamp);
+        appDatabase.getExerciseDao().insertAll(exercise);
+
+        //calling the saveToServerDatabase method here: pass in the same above values
+        saveToServerDatabase(editTitle.getText().toString(), editQuantity.getText().toString(), editDescription.getText().toString());
+
+        //source: https://stackoverflow.com/questions/3053761/reload-activity-in-android
+        //source: https://medium.com/@guendouz/room-livedata-and-recyclerview-d8e96fb31dfe
+        //source: https://developer.android.com/guide/components/fundamentals
+
+        finish();
+        startActivity(getIntent());
+//        mAdapter.notifyDataSetChanged();
+
+    }
+
+
+    //STARTING THE API REQUEST
+    //source:https://developer.android.com/training/volley/simple
+    //source: https://stackoverflow.com/questions/8371274/how-to-parse-json-array-with-gson/8371455
+
+    // Instantiate the RequestQueue.
+    public void getServerDataBase() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://exercise-health-app.herokuapp.com/exercise";
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        //source:https://stackoverflow.com/questions/8371274/how-to-parse-json-array-with-gson/8371455
+                        Gson gson = new Gson();
+                        //b/c json doesn't know to turn into a list
+                        Type listType = new TypeToken<List<Exercise>>(){}.getType();
+                        List<Exercise> serverResponse = gson.fromJson(response, listType);
+                        serverDatabase = serverResponse;
+
+                        //combining the two databases, to essentially display both at once
+                        displayDataFromRecycleView();
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Diary.getServer", error.toString());
+
+            }
+        });
+
+// Add the request to the RequestQueue.
+        queue.add(stringRequest);
+    }
+
+
+    //displayDataFromRecycleView
+
+    public void displayDataFromRecycleView() {
         appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "exercise").allowMainThreadQueries().build();
 
+        if(appDatabase.getExerciseDao().getAllexcercise().isEmpty()){
+            Date now = new Date();
+            String timestamp = DateFormat.format("M/d/yy h:mma", now).toString();
+            appDatabase.getExerciseDao().insertAll(new Exercise("running", "5", "running in place", timestamp));
+        }
 //        //checking database working
 //        Exercise testing = new Exercise("testing", "testing","testing", "testing");
 //        appDatabase.getExerciseDao().insertAll(testing);
+
+
+        //combing external database and local database(adding what is appDB to serverDB)
+        serverDatabase.addAll(appDatabase.getExerciseDao().getAllexcercise());
+
 
         //source: http://www.vogella.com/tutorials/AndroidRecyclerView/article.html
         recyclerView = (RecyclerView) findViewById(R.id.diaryRecycler);
@@ -55,70 +156,51 @@ public class ExcerciseDiary extends AppCompatActivity {
 
 
         // define an adapter
-        mAdapter = new MyAdapter(appDatabase.getExerciseDao().getAllexcercise());
+        mAdapter = new MyAdapter(serverDatabase);
+//        mAdapter = new MyAdapter(appDatabase.getExerciseDao().getAllexcercise());
         recyclerView.setAdapter(mAdapter);
 //        mAdapter.notifyDataSetChanged();
+
     }
 
-    //STARTING THE API REQUEST
-    //source:https://developer.android.com/training/volley/simple
-    //source: https://stackoverflow.com/questions/8371274/how-to-parse-json-array-with-gson/8371455
 
-    // Instantiate the RequestQueue.
-
-    public  void requestingBody() {
+    //Now need to save to Server Database
+    public void saveToServerDatabase(final String title, final String quantity, final String description) {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://exercise-health-app.herokuapp.com/exercise";
 
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+        //The following is going to request a string response from the url.
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        Gson gson = new Gson();
-                        String jsonOutput = "title: "; //list 
-                        Type listType = new TypeToken<List<Exercise>>(){}.getType();
-                        List<Exercise> posts = gson.fromJson(jsonOutput, listType);
-
+                        Log.i("Diary.getServer", "added to server db");
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.e("Diary.getServer", error.toString());
 
             }
-        });
+        }) {
+
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("title", title);
+                params.put("quantity", quantity);
+                params.put("description", description);
+
+                return params;
+
+            }
+
+        };
 
 // Add the request to the RequestQueue.
         queue.add(stringRequest);
+
+
+        }
+
     }
 
-
-
-    //saving the diary entry to the dataBase
-
-    public void addDiaryEntryOnButtonClick(View view){
-
-        //finding the EditTextby ID:
-        EditText editTitle = findViewById(R.id.title);
-        EditText editQuantity = findViewById(R.id.quantity);
-        EditText editDescription=findViewById(R.id.description);
-        String timestamp = new Date().toString();
-
-
-        //textEdit 9: time stamp not adding well
-
-        // fetch data and create Excercise object
-        Exercise exercise = new Exercise(editTitle.getText().toString(), editQuantity.getText().toString(), editDescription.getText().toString(), timestamp);
-        appDatabase.getExerciseDao().insertAll(exercise);
-
-
-
-        //source: https://stackoverflow.com/questions/3053761/reload-activity-in-android
-        //source: https://medium.com/@guendouz/room-livedata-and-recyclerview-d8e96fb31dfe
-        //source: https://developer.android.com/guide/components/fundamentals
-        finish();
-        startActivity(getIntent());
-        mAdapter.notifyDataSetChanged();
-    }
-}

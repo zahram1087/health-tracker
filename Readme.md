@@ -49,6 +49,16 @@ Add Espresso tests for all of the Activities we’ve built so far. In particular
 #### Camera
 Add the ability for users to enter a profile picture. Give them the option of taking a new photo with the camera, or using images already on their phone. Your app will need to request the appropriate permissions for this. Once users take a profile picture, you should display it on the homescreen
 
+# Feature Tasks: LAB 31
+  Backend
+  Add a replica of your Exercise model to the backend Spring app. Create a POST route that allows creating a new Exercise, and a GET route that responds with all Exercises currently in the database. Test these routes with Postman, deploy, and ensure there’s at least one Exercise in your deployed db. (This is all easy now… right?)
+  
+  Android: Display Exercises from the server
+  When a user opens the Exercise Diary page, the app should make a request to the server to retrieve all the Exercises in the server’s database. It should display both those Exercises and the ones that are local to the device within the Diary page.
+  
+  Android: Post Exercises to the server
+  When a user creates a new Exercise locally on their device, in addition to saving it to the local database, the app should POST it to the server.
+
 #### Sources for lab26:
 * source: https://stackoverflow.com/questions/4597690/android-timer-how-to
 
@@ -75,28 +85,71 @@ Date: 1/15/19
 * Time: 1:34PM
 * Description: https://github.com/zahram1087/health-tracker/commit/ef4fd5da0d9a4ecdc06922e8847890f86d6d87a0
 
+Date: 1/19/19:
+
+* Time: 1:30PM
+* Description: https://github.com/zahram1087/health-tracker/commit/52201d5ddfbd7b547859abdf9328bacd44bcf9e6
+
 
 
 # screenshots of App Features:
 
+### Screenshots
 * HomePage:
-![Home_Page](../assets/mainActivity.png)
+
+<p float="left">
+  <img src="./assets/mainActivity.png" width="150" />
+</p>
 
 * FingerExcercise:
-![Finger_excercise](../assets/finger.png)
+
+<p float="left">
+  <img src="./assets/finger.png" width="150" />
+</p>
 
 * Timer:
-![Timer](../assets/timer.png)
+
+<p float="left">
+  <img src="./assets/timer.png.png
+</p>
+
 
 * Notifications:
-![Notifications](../assets/notification.png)
+
+<p float="left">
+  <img src="./assets/notification.png" width="150" />
+</p>
 
 * Diary:
-![Diary](../assets/diary.png)
 
-* HomePage Tp include Diary Activity:
-![Diary](../assets/mainActivityDiaryRoute.png)
+<p float="left">
+  <img src="./assets/diary.png" width="150" />
+</p>
+
+* HomePage
+
+<p float="left">
+  <img src="./assets/mainActivityDiaryRoute.png" width="150" />
+</p>
 
 
+
+* activityTests
+
+<p float="left">
+  <img src="./assets/activityTests.png" width="150" />
+</p>
+
+* databasetest
+
+<p float="left">
+  <img src="./assets/databasetest.png" width="150" />
+</p>
+
+* serverAndLocaldataBase
+
+<p float="left">
+  <img src="./assets/serverAndLocaldataBase.png" width="150" />
+</p>
 
 

@@ -12,4 +12,11 @@
     <string name="go_diary">DIARY</string>
     <string name="input_label">Title</string>
     <string name="submit">Submit</string>
+    <string name="title">Title</string>
+    <string name="enter_quantity">enter quantity</string>
+    <string name="description">description</string>
+    <string name="image">image</string>
+
+    <string name="date">Date</string>
+    <string name="quote">quote</string>
 </resources>
