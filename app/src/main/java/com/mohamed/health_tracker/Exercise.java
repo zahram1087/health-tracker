@@ -37,7 +37,7 @@ public class Exercise {
     }
 
     public String toString() {
-        return this.title + ": " + this.description + " - " + this.timestamp + this.location;
+        return this.title + ": " + this.description + " - " + this.timestamp;
     }
 
 }
