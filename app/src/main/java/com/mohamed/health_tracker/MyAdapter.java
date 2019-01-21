@@ -67,7 +67,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // - replace the contents of the view with that element
         final Exercise exercise = values.get(position);
         holder.txtHeader.setText(exercise.title + ", " + exercise.quantity );
-        holder.txtFooter.setText("Diary Entry: " + exercise.description);
+        holder.txtFooter.setText("Diary Entry: " + exercise.description+ "Location:"+ exercise.location);
         holder.txtDate.setText(exercise.timestamp);
     }
 
