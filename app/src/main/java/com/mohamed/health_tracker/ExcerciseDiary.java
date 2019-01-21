@@ -105,6 +105,7 @@ public class ExcerciseDiary extends AppCompatActivity {
         finish();
         startActivity(getIntent());
 //        mAdapter.notifyDataSetChanged();
+//        getLocationExercise();
 
     }
 
@@ -263,24 +264,21 @@ public class ExcerciseDiary extends AppCompatActivity {
                                             ", Longitude = " +
                                             location.getLongitude(), illegalArgumentException);
                                 }
-                                // Handle case where no address was found.
-                                if (addresses == null || addresses.size() == 0) {
-                                    if (errorMessage.isEmpty()) {
-                                        errorMessage = "no address found";
-                                        Log.e("Location", errorMessage);
-                                    } else {
-                                        exerciseLocation = addresses.get(0).getLocality();
-                                        Log.i("Location", "address found");
-                                    }
-                                } else {
+
+                                exerciseLocation = addresses.get(0).getLocality();
+
+
+                            }
+                              else {
+
                                     exerciseLocation = "Unavailable";
                                 }
+
                             }
-                        }
 
                     });
-
-        } else {
+        }
+        else {
             // Permission is not granted
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
                 //LOG
@@ -290,7 +288,6 @@ public class ExcerciseDiary extends AppCompatActivity {
                         new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                         MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
             }
-
         }
     }
 
@@ -315,12 +312,8 @@ public class ExcerciseDiary extends AppCompatActivity {
                 return;
             }
 
-            // other 'case' lines to check for other
-            // permissions this app might request.
         }
     }
-
-
 }
 
 
