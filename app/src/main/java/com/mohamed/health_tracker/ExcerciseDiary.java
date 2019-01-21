@@ -128,8 +128,7 @@ public class ExcerciseDiary extends AppCompatActivity {
                         //source:https://stackoverflow.com/questions/8371274/how-to-parse-json-array-with-gson/8371455
                         Gson gson = new Gson();
                         //b/c json doesn't know to turn into a list
-                        Type listType = new TypeToken<List<Exercise>>() {
-                        }.getType();
+                        Type listType = new TypeToken<List<Exercise>>() {}.getType();
                         List<Exercise> serverResponse = gson.fromJson(response, listType);
                         serverDatabase = serverResponse;
 
@@ -208,9 +207,9 @@ public class ExcerciseDiary extends AppCompatActivity {
 
             }
         }) {
-
+            @Override
             protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("title", title);
                 params.put("quantity", quantity);
                 params.put("description", description);
@@ -232,8 +231,7 @@ public class ExcerciseDiary extends AppCompatActivity {
         //source:https://developer.android.com/training/permissions/requesting
         //source:https://developer.android.com/training/location/display-address#java
         //Permission granted:
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
             mFusedLocationClient.getLastLocation()
                     .addOnSuccessListener(this, new OnSuccessListener<Location>() {
@@ -248,15 +246,14 @@ public class ExcerciseDiary extends AppCompatActivity {
 
                                 List<Address> addresses = null;
                                 try {
-                                    addresses = geocoder.getFromLocation(
-                                            location.getLatitude(),
-                                            location.getLongitude(), 1);
+                                    addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                                 } catch (IOException e) {
                                     // Catch network or other I/O problems.
                                     errorMessage = "service not available";
                                     Log.e("Network", errorMessage, e);
-                                    e.printStackTrace();
-                                } catch (IllegalArgumentException illegalArgumentException) {
+//                                    e.printStackTrace();
+                                }
+                                catch (IllegalArgumentException illegalArgumentException) {
                                     // Catch invalid latitude or longitude values.
                                     errorMessage = "invalid latitude/longitude used";
                                     Log.e("Location", errorMessage + ". " +
@@ -266,7 +263,6 @@ public class ExcerciseDiary extends AppCompatActivity {
                                 }
 
                                 exerciseLocation = addresses.get(0).getLocality();
-
 
                             }
                               else {
