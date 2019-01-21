@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 
@@ -25,16 +27,19 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.internal.Constants;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class ExcerciseDiary extends AppCompatActivity {
@@ -52,7 +57,9 @@ public class ExcerciseDiary extends AppCompatActivity {
 
     //getting location
     private FusedLocationProviderClient mFusedLocationClient;
-    private final int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
+    private final int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1890;
+    private String exerciseLocation;
+    private String errorMessage = "";
 
 
     @Override
@@ -60,16 +67,12 @@ public class ExcerciseDiary extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_excercise_diary);
 
-        //for location
+        //for last known location of phone
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
+        getLocationExercise();
 
         //calling the server database
         getServerDataBase();
-
-        //checking location
-        getLocation();
-
 
     }
 
@@ -89,7 +92,7 @@ public class ExcerciseDiary extends AppCompatActivity {
 
 
         // fetch data and create Excercise object
-        Exercise exercise = new Exercise(editTitle.getText().toString(), editQuantity.getText().toString(), editDescription.getText().toString(), timestamp);
+        Exercise exercise = new Exercise(editTitle.getText().toString(), editQuantity.getText().toString(), editDescription.getText().toString(), timestamp,exerciseLocation);
         appDatabase.getExerciseDao().insertAll(exercise);
 
         //calling the saveToServerDatabase method here: pass in the same above values
@@ -155,7 +158,7 @@ public class ExcerciseDiary extends AppCompatActivity {
         if (appDatabase.getExerciseDao().getAllexcercise().isEmpty()) {
             Date now = new Date();
             String timestamp = DateFormat.format("M/d/yy h:mma", now).toString();
-            appDatabase.getExerciseDao().insertAll(new Exercise("running", "5", "running in place", timestamp));
+            appDatabase.getExerciseDao().insertAll(new Exercise("running", "5", "running in place", timestamp, "Seattle"));
         }
 //        //checking database working
 //        Exercise testing = new Exercise("testing", "testing","testing", "testing");
@@ -210,6 +213,7 @@ public class ExcerciseDiary extends AppCompatActivity {
                 params.put("title", title);
                 params.put("quantity", quantity);
                 params.put("description", description);
+                params.put("location", exerciseLocation);
 
                 return params;
 
@@ -223,42 +227,75 @@ public class ExcerciseDiary extends AppCompatActivity {
 
 
     //ADDING LOCATION
-    public void getLocation() {
+    public void getLocationExercise() {
         //source:https://developer.android.com/training/permissions/requesting
-
+        //source:https://developer.android.com/training/location/display-address#java
+        //Permission granted:
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
-            } else {
-                // Permission is not granted
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
-            }
-
-        } else {
 
             mFusedLocationClient.getLastLocation()
                     .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                         @Override
                         public void onSuccess(Location location) {
-
-                            Log.e("Location", "PERMISSION");
-
                             // Got last known location. In some rare situations this can be null.
-
 
                             if (location != null) {
                                 // Logic to handle location object
+                                //source:https://stackoverflow.com/questions/22323974/how-to-get-city-name-by-latitude-longitude-in-android
+                                Geocoder geocoder = new Geocoder(ExcerciseDiary.this, Locale.getDefault());
+
+                                List<Address> addresses = null;
+                                try {
+                                    addresses = geocoder.getFromLocation(
+                                            location.getLatitude(),
+                                            location.getLongitude(), 1);
+                                } catch (IOException e) {
+                                    // Catch network or other I/O problems.
+                                    errorMessage = "service not available";
+                                    Log.e("Network", errorMessage, e);
+                                    e.printStackTrace();
+                                } catch (IllegalArgumentException illegalArgumentException) {
+                                    // Catch invalid latitude or longitude values.
+                                    errorMessage = "invalid latitude/longitude used";
+                                    Log.e("Location", errorMessage + ". " +
+                                            "Latitude = " + location.getLatitude() +
+                                            ", Longitude = " +
+                                            location.getLongitude(), illegalArgumentException);
+                                }
+                                // Handle case where no address was found.
+                                if (addresses == null || addresses.size() == 0) {
+                                    if (errorMessage.isEmpty()) {
+                                        errorMessage = "no address found";
+                                        Log.e("Location", errorMessage);
+                                    } else {
+                                        exerciseLocation = addresses.get(0).getLocality();
+                                        Log.i("Location", "address found");
+                                    }
+                                } else {
+                                    exerciseLocation = "Unavailable";
+                                }
                             }
                         }
 
                     });
+
+        } else {
+            // Permission is not granted
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                //LOG
+            } else {
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
+            }
+
         }
     }
 
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION: {
                 // If request is cancelled, the result arrays are empty.
@@ -266,11 +303,14 @@ public class ExcerciseDiary extends AppCompatActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted, yay! Do the
                     Log.e("Location", "PERMISSION");
+                    getLocationExercise();
 
                     // contacts-related task you need to do.
                 } else {
                     // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                    errorMessage = "Permission denied";
+                    Log.e("Location", errorMessage);
+
                 }
                 return;
             }
@@ -281,9 +321,7 @@ public class ExcerciseDiary extends AppCompatActivity {
     }
 
 
-
-
-    }
+}
 
 
 
