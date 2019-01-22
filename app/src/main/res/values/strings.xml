@@ -19,4 +19,9 @@
 
     <string name="date">Date</string>
     <string name="quote">quote</string>
+    <string name="username">User Name</string>
+    <string name="userNameInput">userNameInput</string>
+    <string name="name2">name2</string>
+    <string name="save_username">save_username</string>
+    <string name="EnterUserName">Enter User Name</string>
 </resources>
