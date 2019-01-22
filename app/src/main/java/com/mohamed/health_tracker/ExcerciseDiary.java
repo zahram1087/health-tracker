@@ -6,6 +6,8 @@ import androidx.room.Room;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -19,6 +21,7 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 
 import com.android.volley.Request;
@@ -67,12 +70,18 @@ public class ExcerciseDiary extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_excercise_diary);
 
+
+
+
         //for last known location of phone
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLocationExercise();
 
         //calling the server database
         getServerDataBase();
+
+//        //username
+//        displayUserName();
 
     }
 
@@ -104,6 +113,8 @@ public class ExcerciseDiary extends AppCompatActivity {
 
         finish();
         startActivity(getIntent());
+        //username
+        displayUserName();
 //        mAdapter.notifyDataSetChanged();
 //        getLocationExercise();
 
@@ -309,6 +320,19 @@ public class ExcerciseDiary extends AppCompatActivity {
             }
 
         }
+    }
+
+    public void displayUserName(){
+        //source:https://developer.android.com/training/data-storage/shared-preferences
+        //Evan helped me also
+
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.username), Context.MODE_PRIVATE);
+        String username = sharedPref.getString(getString(R.string.username), "enter user name");
+        TextView userData = findViewById(R.id.username2);
+        userData.setText("welcome, " + username);
+
     }
 }
 

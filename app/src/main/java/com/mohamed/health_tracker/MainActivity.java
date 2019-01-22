@@ -9,6 +9,7 @@ import androidx.room.Room;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 
 import android.graphics.Bitmap;
@@ -22,6 +23,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -72,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
+        //username
+        displayUserName();
+
         /** FOR CAROUSEL FUNCTIONALITY */
         carouselView = (CarouselView) findViewById(R.id.carouselView);
         carouselView.setPageCount(sampleImages.length);
@@ -88,11 +93,10 @@ public class MainActivity extends AppCompatActivity {
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "exercise").build();
 
+
     }
 
     /** FOR CAMERA FUNCTIONALITY */
-
-
 
 
     //FUNCTIONALITY TO GO TO OTHER ACTIVITIES:
@@ -190,7 +194,38 @@ public class MainActivity extends AppCompatActivity {
             time.cancel();
             
         }
+        //save the user name
+
+        public void saveUserName(View view){
+
+            EditText usernameText = findViewById(R.id.usernameInput);
+            String username = usernameText.getText().toString();
+            Context context = this;
+            SharedPreferences sharedPref = context.getSharedPreferences(
+                    getString(R.string.username), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString(getString(R.string.username), username);
+            editor.commit();
+
+            TextView userData = findViewById(R.id.textView2);
+            userData.setText("Welcome, " + username);
+            usernameText.setText("");
+        }
+
+    public void displayUserName(){
+        //source:https://developer.android.com/training/data-storage/shared-preferences
+        //Evan helped me also
+
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.username), Context.MODE_PRIVATE);
+        String username = sharedPref.getString(getString(R.string.username), "enter user name");
+        TextView userData = findViewById(R.id.username);
+        userData.setText("welcome, " + username);
 
     }
+}
+
+
 
 
