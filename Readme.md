@@ -2,19 +2,19 @@
 
 ## Health Tracker app
  
-###Finger Exercises
+### Finger Exercises
 One key part of health is building finger strength and endurance. On the main page, display a number and a button. The number should increase when the button is clicked.
 
 Stretch goal: the app should show encouraging messages as the user passes milestones in their button-clicking (perhaps a message at every 10 clicks, and serious props at every 50).
 
-###Stopwatch
+### Stopwatch
 Still on the main page, add a stopwatch. Have a button to [Start/Pause] and [Reset] the clock. The start/pause button should toggle between saying “start” and “pause.” And you should only be able to reset when the stopwatch is paused.
 
 Have the view update as fast as possible while still leaving the buttons responsive.
 
 Display the clock as 0:00:00.000 so it should be able to track up to 9 hours, 59 minutes, 59 seconds and 999 milliseconds.
 
-###Inspiring Image Carousel
+### Inspiring Image Carousel
 At the top of our main page, we want to inspire our users with images of the type of person they can become. Display an image with a caption below it. (The caption should NOT be part of the image; it should be text.) Allow users to cycle through images and read the captions. Pressing next should go to the next image and its caption, pressing prev should go back. The app should display a (1/N), (2/N) … indicator so users know how many items are in the list.
 
 * You may choose the images and captions. Have fun.
@@ -43,33 +43,33 @@ At the top of the Exercise Diary activity, add a form that allows a user to ente
 
 # Feature Tasks: LAB 29
 
-#### Espresso
+### Espresso
 Add Espresso tests for all of the Activities we’ve built so far. In particular, the Finger Exercises would benefit from testing, as would the image carousel.
 
-#### Camera
+### Camera
 Add the ability for users to enter a profile picture. Give them the option of taking a new photo with the camera, or using images already on their phone. Your app will need to request the appropriate permissions for this. Once users take a profile picture, you should display it on the homescreen
 
 # Feature Tasks: LAB 31
-  #### Backend
+  ### Backend
   Add a replica of your Exercise model to the backend Spring app. Create a POST route that allows creating a new Exercise, and a GET route that responds with all Exercises currently in the database. Test these routes with Postman, deploy, and ensure there’s at least one Exercise in your deployed db. (This is all easy now… right?)
   
-  #### Android: Display Exercises from the server
+  ### Android: Display Exercises from the server
   When a user opens the Exercise Diary page, the app should make a request to the server to retrieve all the Exercises in the server’s database. It should display both those Exercises and the ones that are local to the device within the Diary page.
   
-  #### Android: Post Exercises to the server
+  ### Android: Post Exercises to the server
   When a user creates a new Exercise locally on their device, in addition to saving it to the local database, the app should POST it to the server.
   
-  #### Running app: https://exercise-health-app.herokuapp.com/exercise
+  ### Running app: https://exercise-health-app.herokuapp.com/exercise
   
   
  # Feature Tasks: LAB 32
   #### Using strings.xml
   Remove all hardcoded strings from your UI, and instead use the strings.xml file. (Finally make all of those warnings go away!) You should continue using strings.xml for all future additions to your app, as well.
   
-  #### Location
+  ### Location
   When a user adds an exercise, they should be able to include their current location. Update your models appropriately, and display the location within the ListView.
   
-  #### SharedPrefs
+  ### SharedPrefs
   Ensure that the user’s username is correctly displayed throughout the app. Also, modify the homepage to include some key stats, such as the current finger exercise count and the total number of times the user has visited the homepage.
   
   #### Collaborators:
@@ -80,7 +80,7 @@ Add the ability for users to enter a profile picture. Give them the option of ta
   
   
 
-  #### Sources for lab26:
+  ### Sources for lab26:
 * source: https://stackoverflow.com/questions/4597690/android-timer-how-to
 
 # Change Log
@@ -111,6 +111,12 @@ Date: 1/19/19:
 * Time: 1:30PM
 * Description: https://github.com/zahram1087/health-tracker/commit/52201d5ddfbd7b547859abdf9328bacd44bcf9e6
 
+Date: 1/22/19:
+
+* Time: 1:30PM
+* Description: Added username in all activites to display
+
+
 
 
 # screenshots of App Features:
@@ -119,38 +125,38 @@ Date: 1/19/19:
 * HomePage:
 
 <p float="left">
-  <img src="./assets/mainActivity.png" width="150" />
+  <img src="../assets/mainActivity.png" width="150" />
 </p>
 
 * FingerExcercise:
 
 <p float="left">
-  <img src="./assets/finger.png" width="150" />
+  <img src="../assets/finger.png" width="150" />
 </p>
 
 * Timer:
 
 <p float="left">
-  <img src="./assets/timer.png.png
+  <img src="../assets/timer.png.png
 </p>
 
 
 * Notifications:
 
 <p float="left">
-  <img src="./assets/notification.png" width="150" />
+  <img src="../assets/notification.png" width="150" />
 </p>
 
 * Diary:
 
 <p float="left">
-  <img src="./assets/diary.png" width="150" />
+  <img src="../assets/diary.png" width="150" />
 </p>
 
 * HomePage
 
 <p float="left">
-  <img src="./assets/mainActivityDiaryRoute.png" width="150" />
+  <img src="../assets/mainActivityDiaryRoute.png" width="150" />
 </p>
 
 
@@ -158,19 +164,39 @@ Date: 1/19/19:
 * activityTests
 
 <p float="left">
-  <img src="./assets/activityTests.png" width="150" />
+  <img src="../assets/activityTests.png" width="150" />
 </p>
 
 * databasetest
 
 <p float="left">
-  <img src="./assets/databasetest.png" width="150" />
+  <img src="../assets/databasetest.png" width="150" />
 </p>
 
 * serverAndLocaldataBase
 
 <p float="left">
-  <img src="./assets/serverAndLocaldataBase.png" width="150" />
+  <img src="../assets/serverAndLocaldataBase.png" width="150" />
 </p>
 
 
+### Added User names to the top of the Following activates:
+* Timer
+<p float="left">
+  <img src="../assets/usernametimer.png" width="150" />
+</p>
+
+* Diary
+<p float="left">
+  <img src="../assets/usernamediary.png" width="150" />
+</p>
+
+* Main Activity
+<p float="left">
+  <img src="../assets/usernamemain.png" width="150" />
+</p>
+
+* Finger
+<p float="left">
+  <img src="../assets/usernamefinger.png" width="150" />
+</p>

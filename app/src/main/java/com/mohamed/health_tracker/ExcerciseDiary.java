@@ -69,7 +69,7 @@ public class ExcerciseDiary extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_excercise_diary);
-
+        displayUserName();
 
 
 
@@ -114,7 +114,7 @@ public class ExcerciseDiary extends AppCompatActivity {
         finish();
         startActivity(getIntent());
         //username
-        displayUserName();
+
 //        mAdapter.notifyDataSetChanged();
 //        getLocationExercise();
 
