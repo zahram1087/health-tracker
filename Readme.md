@@ -77,7 +77,7 @@ Add the ability for users to enter a profile picture. Give them the option of ta
   Dave  
   Evan
   Jeff
-  
+  Nick
   
 
   ### Sources for lab26:
@@ -199,4 +199,14 @@ Date: 1/22/19:
 * Finger
 <p float="left">
   <img src="../assets/usernamefinger.png" width="150" />
+</p>
+
+* Camera Activity-Home-displays profile pic
+<p float="left">
+  <img src="../assets/displayPic.png" width="150" />
+</p>
+
+* Camera Activity-take/upload a picture
+<p float="left">
+  <img src="../assets/takepicture.png" width="150" />
 </p>
