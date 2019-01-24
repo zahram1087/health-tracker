@@ -27,7 +27,7 @@
             android:layout_toEndOf="@id/icon"
             android:singleLine="true"
             android:text="@string/description"
-            android:textSize="12sp" />
+            android:textSize="114sp" />
 
         <TextView
             android:id="@+id/firstLine"

@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ExcerciseDiary">
 
+    <!--<TextView-->
+    <!--android:id="@+id/name"-->
+    <!--android:layout_width="287dp"-->
+    <!--android:layout_height="22dp"-->
+    <!--android:layout_marginTop="20dp"-->
+    <!--android:layout_marginEnd="8dp"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/relativeLayout"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent" />-->
+
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
@@ -19,9 +31,9 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="13dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp" />
 
         <EditText
@@ -57,8 +69,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/quantity"
             android:layout_alignStart="@+id/quantity"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="26dp"
+            android:layout_marginStart="-1dp"
+            android:layout_marginTop="21dp"
             android:autofillHints=""
             android:ems="10"
             android:hint="@string/description"

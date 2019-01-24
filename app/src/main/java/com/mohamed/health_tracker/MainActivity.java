@@ -4,24 +4,19 @@ package com.mohamed.health_tracker;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 
-import androidx.core.content.FileProvider;
 import androidx.room.Room;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 
 import android.graphics.Bitmap;
-import android.graphics.Camera;
-import android.net.Uri;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,13 +27,15 @@ import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
 import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.TimerTask;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    /** FOR CAMERA */
+
+    private SharedPreferences preferences;
+    private ImageView avatar;
 
     /**
      * FOR CAMERA FUNCTIONALITY
@@ -73,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
+        //CAMERA
+        avatar = findViewById(R.id.avatar);
+        preferences = getSharedPreferences("userPrefs", 0);
+        displayAvatar();
 
         //username
         displayUserName();
@@ -224,6 +226,34 @@ public class MainActivity extends AppCompatActivity {
         userData.setText("welcome, " + username);
 
     }
+
+    //CAMERA
+    //checks if the user has set their own avatar. If they haven't, display the default. If they have, display that image
+    private void displayAvatar() {
+        if (!preferences.contains("avatarUri")) {
+            avatar.setImageResource(R.drawable.img1);
+        } else {
+            File image = new File(preferences.getString("avatarUri", ""));
+            Bitmap avatarImage = BitmapFactory.decodeFile(image.getAbsolutePath());
+            avatar.setImageBitmap(avatarImage);
+        }
+
+    }
+
+    public void uplaodTakePicture(View view) {
+        Intent goToProfile = new Intent(this, CameraActivity.class);
+        startActivityForResult(goToProfile, 4);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //Case of user went to select a photo from saved images. Grab the proper path for that image, then save it in preferences and call displayAvatar().
+        if (requestCode == 4 && resultCode == RESULT_OK) {
+            displayAvatar();
+
+        }
+    }
+
 }
 
 
